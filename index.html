@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Park Adler's Eastmain</title>
+    <style>
+        body { margin: 0; }
+    </style>
+
+
+<!-- Three.js library -->
+<!-- <script src="https://threejs.org/build/three.min.js"></script> -->
+<script src="Static/three.js"></script> 
+<!-- GLTFLoader.js source -->
+<!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script> -->
+<script src="//cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+<script src='threex.domevents.js'></script>
+<script type="module" src=".tween.module.min.js"></script>
+<script src="Static/OBJLoader.js"></script>
+<script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+<link type="text/css" rel="stylesheet" href="main.css">
+
+</head>
+<p id="demo"></p>
+<body>
+<script>
+    const renderer = new THREE.WebGLRenderer({antialias: true});
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+    const scene = new THREE.Scene();
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.rotateSpeed = .2;
+    controls.enableZoom = true;
+    controls.zoomSpeed = 1;
+
+    const domEvents = new THREEx.DomEvents(camera, renderer.domElement);
+
+    let Mesh;
+    let light;
+
+    renderer.sortObjects = false;
+
+
+    function init() {
+        scene.background = new THREE.Color('black');
+        camera.position.set(0, .5, 90);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement) ;
+    }
+
+
+
+    function setLight() {
+        light = new THREE.AmbientLight(0xffffff); // soft white light
+        scene.add(light);
+        const light1 = new THREE.PointLight(0xffffff)
+        light1.position.y -= 6;
+        light1.position.z -= -24;
+        light1.position.x -= -12;
+        light1.castShawdow = true;
+        scene.add(light1);
+    }
+
+    const sphere1 = new THREE.Mesh(new THREE.SphereGeometry (.5,50,50), new THREE.MeshBasicMaterial({color: 0xF5B041}))
+    const sphere2 = new THREE.Mesh(new THREE.SphereGeometry (.5,50,50), new THREE.MeshBasicMaterial({color: 0xF5B041}))
+    const sphere3 = new THREE.Mesh(new THREE.SphereGeometry (.5,50,50), new THREE.MeshBasicMaterial({color: 0xF5B041}))
+    const sphere4 = new THREE.Mesh(new THREE.SphereGeometry (.5,50,50), new THREE.MeshBasicMaterial({color: 0xF5B041}))
+    const sphere5 = new THREE.Mesh(new THREE.SphereGeometry (.5,50,50), new THREE.MeshBasicMaterial({color: 0xF5B041}))
+
+    //Loading Album Cover
+    // function loadGLTF() {
+    //     let balloonLoader = new THREE.GLTFLoader();
+    //     balloonLoader.load('./model/Jakob Album Art for Website.gltf', (gltf) => {
+    //         Mesh = gltf.scene;
+    //         Mesh.scale.set(3,3,3);
+    //         scene.add(Mesh);
+    //         Mesh.position.x = 10;
+    //         Mesh.position.y = 0;
+    //         Mesh.position.z = 15;
+    //     });
+    // }
+
+    scene.add (sphere1)
+            scene.add (sphere2)
+            scene.add (sphere3)
+            scene.add (sphere4)
+            scene.add (sphere5)
+            sphere1.position.y -= 6;
+            sphere2.position.y -= 9;
+            sphere3.position.y -= -8;
+            sphere4.position.y -= -10.9;
+            sphere5.position.y -= -4;
+            sphere1.position.z -= -24;
+            sphere2.position.z -= -24;
+            sphere3.position.z -= -20;
+            sphere4.position.z -= -22;
+            sphere5.position.z -= -18;
+            sphere1.position.x -= 11;
+            sphere2.position.x -= -15;
+            sphere3.position.x -= -14;
+            sphere4.position.x -= 6.5;
+            sphere5.position.x -= 9;
+
+
+            //Yeeeesss it wokrsssss
+
+        const loader2 = new THREE.GLTFLoader()
+        loader2.load(
+            './model/Jakob Album Art for Website.glb',
+            function (gltf) {
+                // gltf.scene.traverse(function (child) {
+                //     if ((child as THREE.Mesh).isMesh) {
+                //         const m = (child as THREE.Mesh)
+                //         m.receiveShadow = true
+                //         m.castShadow = true
+                //     }
+                //     if (((child as THREE.Light)).isLight) {
+                //         const l = (child as THREE.Light)
+                //         l.castShadow = true
+                //         l.shadow.bias = -.003
+                //         l.shadow.mapSize.width = 2048
+                //         l.shadow.mapSize.height = 2048
+                //     }
+                // })
+                gltf.scene.scale.set(3,3,3);
+                gltf.scene.position.x =4;
+                gltf.scene.position.y = 0;
+                gltf.scene.position.z = 15;
+                const album = gltf.scene;
+                scene.add(gltf.scene)
+            },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+
+
+    //adding text
+    const loader1 = new THREE.FontLoader();
+    loader1.load('./JMH Typewriter_Bold.json', function ( font ) { 
+        const matLite = new THREE.MeshBasicMaterial( {
+                  font: font,
+                  opacity: 1,
+                  color: 0xffffff,
+                  side: THREE.DoubleSide
+        } );
+
+        const message = "Eastmain";
+        const message1 = "After a class on Environmental Ethics, the \ndestruction of the natural world as a result of \nour negligence in addition to the apathy we hold to suffering\n we inflict on other walks of life put me in a \nstate of dread and confusion. I did not \nknow how to cope with the existential thoughts that \nrevolved around the suffering we (myself included) \ninflict on the natural world. Emil Ciorans \n//On the Heights of Despair// provided solace \nand I began think about this month long wilderness \ntrip I had the opportunity of going on in the summer \nof 2019. I never felt such an inherent connection \nwith Mother Earth. Growing up in a city, I never \nfelt that I was at the mercy of the natural world, \nbut it was on this trip especially where I \nfelt as though I was at her mercy. I began to think \nabout all the ways we have altered life to make it \nmore comfortable and more secure, yet in doing so inherently \nlosing touch with the natural world. Yet it was on \nthis trip, in which we put in on the Eastmain River, \nwhere I felt an inherent oneness with nature. I Sometimes \nI think that the figure is seeping into the water \nand other times I think that it is emerging from it, \nyet the idea of the the oneness of man and nature \nstay constant.";
+        const message2 =  "The sheer beauty of the sky painted with \nclouds of animosity: a forever inspiration.";
+        const message3 = "In times of change, the sun still sets and the \nmoon still rises. In writing, but especially \nafter I had finished the EP, I began to ponder the idea \nof impermanence and how it lies at the center of \nthese songs: relationships change, individuals \nchange, and nature changes, but on more of a \nmicro scale, every single thing that may seem \npermanent, isnt. I feel like there is comfort in \npermanence as permanence provides security. \nSo, the inherent comfort we find in the permanence \n makes dealing with change so much more difficult. \nThus, in that I found comfort in the permanence of\nrelationships and people, when these changed, I was \ninherently thrown off. The idea of the acceptance of \nthe impermanence of things is an idea that \nI am always grappling with, but I found solace and \ncomfort not just in the beauty of the sun and moon. \nThe sun and moon, though are ever changing in their \ncomposition, matter, so on and so forth, still rise and \nset until the day comes when they wont anymore. ";
+        const message4 = "An ode to the spruce trees in Quebec and the \npine trees in Maine.";
+        const message5 = " Due east are clouds that represent the unknown, \n the thought being that on a timeline, in that \n present and future events lie towards the right, \n the future is unknown. I, as I feel like so many \n others, tend to ruminate in the past and \n ponder the future, distracting us from the present. \n How much do we miss when we are removed from \n the present?";
+        const alert = "Drag to rotate around // Scroll to zoom in";
+        const mobile = "Please use on Web for best experience";
+
+
+
+        const shapes = font.generateShapes( message, 4 );
+        const shapes1 = font.generateShapes( message1, 1.2 );
+        const shapes2 = font.generateShapes( message2, 1.3 );
+        const shapes3 = font.generateShapes( message3, 1.3 );
+        const shapes4 = font.generateShapes( message4, 1.3 );
+        const shapes5 = font.generateShapes( message5, 1.3);
+        const shapes6 = font.generateShapes( alert, 2);
+        const shapes7 = font.generateShapes( mobile, 1.5);
+
+
+
+
+        const geometry = new THREE.ShapeGeometry( shapes );
+        const geometry1 = new THREE.ShapeGeometry( shapes1 );
+        const geometry2 = new THREE.ShapeGeometry( shapes2 );
+        const geometry3 = new THREE.ShapeGeometry( shapes3 );
+        const geometry4 = new THREE.ShapeGeometry( shapes4 );
+        const geometry5 = new THREE.ShapeGeometry( shapes5 );
+        const geometry6 = new THREE.ShapeGeometry( shapes6 );
+        const geometry7 = new THREE.ShapeGeometry( shapes7 );
+
+
+
+
+        geometry.computeBoundingBox();
+        geometry1.computeBoundingBox();
+        geometry2.computeBoundingBox();
+        geometry3.computeBoundingBox();
+        geometry4.computeBoundingBox();
+        geometry5.computeBoundingBox();
+        geometry6.computeBoundingBox();
+        geometry7.computeBoundingBox();
+
+
+
+
+        const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+        const xMid1 = - 0.5 * ( geometry1.boundingBox.max.x - geometry1.boundingBox.min.x );
+        const xMid2 = - 0.5 * ( geometry2.boundingBox.max.x - geometry2.boundingBox.min.x );
+        const xMid3 = - 0.5 * ( geometry3.boundingBox.max.x - geometry3.boundingBox.min.x );
+        const xMid4 = - 0.5 * ( geometry4.boundingBox.max.x - geometry4.boundingBox.min.x );
+        const xMid5 = - 0.5 * ( geometry5.boundingBox.max.x - geometry5.boundingBox.min.x );
+        const xMid6 = - 0.5 * ( geometry6.boundingBox.max.x - geometry6.boundingBox.min.x );
+        const xMid7 = - 0.5 * ( geometry7.boundingBox.max.x - geometry7.boundingBox.min.x );
+
+
+
+        geometry.translate( xMid, 10, -20 );
+        geometry1.translate( xMid1, 10, -24 );
+        geometry2.translate( xMid2, 10, -24 );
+        geometry3.translate( xMid3, 10, -24 );
+        geometry4.translate( xMid4, 10, -24 );
+        geometry5.translate( xMid5, 10, -24);
+        geometry6.translate( xMid6, 10, -24);
+        geometry7.translate( xMid7, 10, -24);
+
+
+
+        const text = new THREE.Mesh( geometry, matLite );
+        const text1 = new THREE.Mesh( geometry1, matLite );
+        const text2 = new THREE.Mesh( geometry2, matLite );
+        const text3 = new THREE.Mesh( geometry3, matLite );
+        const text4 = new THREE.Mesh( geometry4, matLite );
+        const text5 = new THREE.Mesh( geometry5, matLite )
+        const text6 = new THREE.Mesh( geometry6, matLite );
+        const text7 = new THREE.Mesh( geometry7, matLite );
+
+        text7.position.z = 0;
+        text7.position.x = 0;
+        text7.position.y = 40;
+        text.position.z = 10;
+        text.position.x = -40;
+        text.position.y = 10;
+        function media(x) {
+
+        if (x.matches) { 
+        text.position.z = 10;
+        text.position.x = 0;
+        text.position.y = 20;
+        camera.position.z = 150;
+        text6.position.z = 0;
+        text6.position.x = 0;
+        text6.position.y = 35;
+
+    //change text positions
+    text1.position.x = 0
+    text1.position.z = 45;
+    text1.position.y = 10;
+    text2.position.x = 0
+    text2.position.z = 45;
+    text2.position.y = -10;
+    text3.position.x = 0
+    text3.position.z = 45;
+    text3.position.y = 0;
+    text4.position.x = 0
+    text4.position.z = 45;
+    text4.position.y = -10;
+    text5.position.x = 0
+    text5.position.z = 45;
+    text5.position.y = 0;
+
+    //make click instead of hover
+
+    domEvents.addEventListener (sphere2, 'mouseover', event => {
+        //imagemesh2.visible = true;
+        text1.visible = true;
+        // TYPE EFFECT
+    });
+    //hover out
+    domEvents.addEventListener (sphere2, 'mouseout', event => {
+        //imagemesh2.visible = false;
+        text1.visible = false; 
+    });
+    domEvents.addEventListener (sphere3, 'mouseover', event => {
+        //imagemesh3.visible = true;  
+        text2.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere3, 'mouseout', event => {
+        //imagemesh3.visible = false;
+        text2.visible = false;
+    });
+    domEvents.addEventListener (sphere4, 'mouseover', event => {
+        //imagemesh4.visible = true; 
+        text3.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere4, 'mouseout', event => {
+        //imagemesh4.visible = false;
+        text3.visible = false;  
+    });
+    domEvents.addEventListener (sphere5, 'mouseover', event => {
+        //imagemesh5.visible = true;
+        text4.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere5, 'mouseout', event => {
+        //imagemesh5.visible = false;
+        text4.visible = false;   
+    });
+    domEvents.addEventListener (sphere1, 'mouseover', event => {
+        //imagemesh1.visible = true;
+        text5.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere1, 'mouseout', event => {
+        //imagemesh1.visible = false;
+        text5.visible = false; 
+    });
+    domEvents.addEventListener (sphere1, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+        text7.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere2, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+        text7.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere3, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+        text7.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere4, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+        text7.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere5, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+        text7.visible = false;
+    },10000);
+    domEvents.addEventListener (text, 'mouseover', event => {
+        imagemesh1.visible = true;   
+    },10000);
+    domEvents.addEventListener (text, 'mouseout', event => {
+        imagemesh1.visible = false ;   
+    },10000);
+
+       
+        } else {
+        text7.visible = false;
+        text.position.z = 10;
+        text.position.x = -40;
+        text.position.y = 10;
+        text6.position.z = 10;
+        text6.position.x = 0;
+        text6.position.y = 17;
+        text1.position.z = 10;
+    text1.position.x = -55;
+    text1.position.y = 6;
+    text2.position.z = 10;
+    text2.position.x = -56;
+    text2.position.y = 2;
+    text3.position.z = 10;
+    text3.position.x = -55;
+    text3.position.y = 2;
+    text4.position.z = 10;
+    text4.position.x = -55;
+    text4.position.y = 2;
+    text5.position.z = 10;
+    text5.position.x = -55;
+    text5.position.y = 2;
+
+        domEvents.addEventListener (sphere2, 'mouseover', event => {
+        //imagemesh2.visible = true;
+        text1.visible = true;
+        // TYPE EFFECT
+    });
+    //hover out
+    domEvents.addEventListener (sphere2, 'mouseout', event => {
+        //imagemesh2.visible = false;
+        text1.visible = false; 
+    });
+    domEvents.addEventListener (sphere3, 'mouseover', event => {
+        //imagemesh3.visible = true;  
+        text2.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere3, 'mouseout', event => {
+        //imagemesh3.visible = false;
+        text2.visible = false;
+    });
+    domEvents.addEventListener (sphere4, 'mouseover', event => {
+        //imagemesh4.visible = true; 
+        text3.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere4, 'mouseout', event => {
+        //imagemesh4.visible = false;
+        text3.visible = false;  
+    });
+    domEvents.addEventListener (sphere5, 'mouseover', event => {
+        //imagemesh5.visible = true;
+        text4.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere5, 'mouseout', event => {
+        //imagemesh5.visible = false;
+        text4.visible = false;   
+    });
+    domEvents.addEventListener (sphere1, 'mouseover', event => {
+        //imagemesh1.visible = true;
+        text5.visible = true;
+    });
+    //hover out
+    domEvents.addEventListener (sphere1, 'mouseout', event => {
+        //imagemesh1.visible = false;
+        text5.visible = false; 
+    });
+    domEvents.addEventListener (sphere1, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere2, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere3, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere4, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+    },10000);
+    domEvents.addEventListener (sphere5, 'mouseover', event => {
+        //imagemesh1.visible = false;   
+        text6.visible = false;
+    },10000);
+    domEvents.addEventListener (text, 'mouseover', event => {
+        imagemesh1.visible = true;   
+    },10000);
+    domEvents.addEventListener (text, 'mouseout', event => {
+        imagemesh1.visible = false ;   
+    },10000);
+    
+        }
+        }
+
+        var x = window.matchMedia("(max-width: 700px)")
+        media(x) 
+        x.addListener(media);
+
+
+        scene.add( text );
+        scene.add( text1 );
+        text1.visible = false;
+        scene.add( text2 );
+        text2.visible = false;
+        scene.add( text3 );
+        text3.visible = false;
+        scene.add( text4 );
+        text4.visible = false;
+        scene.add( text5 );
+        text5.visible = false;
+        scene.add( text6 );
+        text6.visible = true;
+        scene.add( text7 );
+
+
+
+
+    // adding images
+    // lower left
+    var loader = new THREE.TextureLoader();
+    var material = new THREE.MeshLambertMaterial({
+    map: loader.load('./Images/image2.jpeg')
+    }  );
+    var geometryx = new THREE.PlaneGeometry(40, 30);
+    var imagemesh1 = new THREE.Mesh(geometryx, material);
+    imagemesh1.position.z -= -50;
+    imagemesh1.position.x += 0;
+    imagemesh1.position.y += 0;
+    imagemesh1.visible = false;
+    imagemesh1.material.opacity = 0.2; 
+    scene.add(imagemesh1);
+
+
+    // //lower right
+    // var material1 = new THREE.MeshLambertMaterial({
+    // map: loader.load('./Images/image1.jpeg')
+    // }  );
+    // var geometry2x = new THREE.PlaneGeometry(30, 20);
+    // var imagemesh2 = new THREE.Mesh(geometry2x, material1);
+    // imagemesh2.position.z -= -26;
+    // imagemesh2.position.x += -25;
+    // imagemesh2.position.y += -5;
+    // imagemesh2.visible = false;
+    // imagemesh2.material.opacity = 0.7; 
+    // scene.add(imagemesh2);
+
+    // //clouds
+    // var material2 = new THREE.MeshLambertMaterial({
+    // map: loader.load('./Images/image2.jpeg')
+    // }  );
+    // var geometry3x = new THREE.PlaneGeometry(30, 20);
+    // var imagemesh3 = new THREE.Mesh(geometry3x, material2);
+    // imagemesh3.position.z -= -26;
+    // imagemesh3.position.x += -25;
+    // imagemesh3.position.y += -5;
+    // imagemesh3.visible = false;
+    // imagemesh3.material.opacity = 0.7; 
+    // scene.add(imagemesh3);
+
+    // //moon
+    // var material3 = new THREE.MeshLambertMaterial({
+    // map: loader.load('./Images/moon.jpeg')
+    // }  );
+    // var geometry4x = new THREE.PlaneGeometry(30, 20);
+    // var imagemesh4 = new THREE.Mesh(geometry4x, material3);
+    // imagemesh4.position.z -= -26;
+    // imagemesh4.position.x += -38;
+    // imagemesh4.position.y += -5;
+    // imagemesh4.visible = false;
+    // imagemesh4.material.opacity = 0.7; 
+    // scene.add(imagemesh4);
+
+
+    // var material4 = new THREE.MeshLambertMaterial({
+    // map: loader.load('./Images/1.jpeg')
+    // }  );
+    // var geometry5x = new THREE.PlaneGeometry(30, 20);
+    // var imagemesh5 = new THREE.Mesh(geometry5x, material4);
+    // imagemesh5.position.z -= -26;
+    // imagemesh5.position.x += -25;
+    // imagemesh5.position.y += -5;
+    // imagemesh5.visible = false;
+    // imagemesh5.material.opacity = 0.7; 
+    // scene.add(imagemesh5);
+
+    
+    window.addEventListener( 'resize', onWindowResize, false );
+
+    function onWindowResize(){
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+    //import TWEEN from 'https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.5.0/dist/tween.esm.js';
+    //when you click on sphere 1, it changes position, you want an image to come up, doesnt work
+
+    } );
+        
+
+
+    function animate() {
+        requestAnimationFrame(animate);
+            const d = new Date();
+            const time = d.getTime();;
+            const  pi = 3.14;
+            const  frequency = 10; // Frequency in Hz
+            //need this to modulate between -1 and 1... but basically rotate + for a bit, then negative
+            //like for 1 second, rotate this, then rotate this
+            scene.rotation.y = Math.sin(Date.now() * 0.001) * Math.PI * 0.007;
+
+
+        
+
+        renderer.render(scene, camera);
+        controls.update();
+    }
+
+    init();
+    setLight();
+    animate();
+
+
+</script>
+
+ <!-- make different font -->
+ 
+  <div class="footer2">
+  </div>
+  <div class="footer">
+    <p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Est Inconnu // Two Wade Four // Reverence // Insular // Sol Etude  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
+  </div>
+    <div class="Skimpyrat">
+        <a href="https://www.skimpyrat.com/" target="_blank">
+    <img src="skimpyrat logo.png" alt="Instagram Logo" width="40" height="40"> 
+    </div>
+
+    <!-- replace with symbol -->
+    <div class="Listen_now">
+        <a href="https://www.instagram.com/jpk0b/?hl=en" target="_blank">
+        <img src="IG_LOGO.png" alt="Instagram Logo" width="20" height="20"> 
+      </div>
+      <div class="Spotify">
+        <a href="https://www.instagram.com/jpk0b/?hl=en" target="_blank">
+        <img src="Spotify.png" alt="Spotify" width="72" height="20"> 
+      </div>
+      <div class="Apple_Music">
+        <a href="https://www.instagram.com/jpk0b/?hl=en" target="_blank">
+        <img src="Apple Music Logo White.png" alt="Apple Music" width="70" height="16"> 
+      </div>
+
+
+
+
+    <style>
+    .footer {
+      text-decoration: none;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 8%;
+      background-color: black;
+      color: white;
+      text-align: center;
+      
+    }
+    .footer2 {
+      text-decoration: none;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 8%;
+      background-color: black;
+      color: white;
+      text-align: center;
+    }
+    .Skimpyrat {
+      position: absolute;
+      left: 10px;
+      bottom: 0;
+      width: 6%;
+      height: 5%;
+      font-size: x-small;
+      background-color: black;
+      color: white;
+      text-align: right;
+      text-decoration: none;
+    }
+
+    .Listen_now{
+      position: absolute;
+      left: 90%;
+      bottom: 0;
+      width: 8%;
+      height: 5%;
+      background-color: black;
+      flex-direction: row;
+      color: white;
+      text-align: right;
+      text-decoration: none;
+
+    }
+    .Spotify{
+      position: absolute;
+      flex-direction: row;
+      left: 86%;
+      bottom: 0;
+      width: 8%;
+      height: 5%;
+      background-color: black;
+      color: white;
+      text-align: right;
+      text-decoration: none;
+
+    }
+    .Apple_Music{
+      position: absolute;
+      flex-direction: row;
+      left: 79%;
+      bottom: 0;
+      width: 8%;
+      height: 5%;
+      background-color: black;
+      color: white;
+      text-align: right;
+      text-decoration: none;
+
+    }
+    @media only screen and (max-width: 1000px) {
+    .Spotify {
+        text-align: center;
+        left: 52%;
+        height: 8%;
+
+    }
+    .Apple_Music{
+        text-align: center;
+        left: 25%;
+        height: 8%;
+    }
+    .Listen_now{
+        text-align: center;
+        left: 75%;
+        height: 8%;
+    }
+    .footer{
+        opacity: 0;
+    }
+    .footer2{
+        height: 16%;
+    }
+    
+    .Skimpyrat{
+        left: 5%;
+        height: 8%;
+    }
+    }
+
+
+    </style>
+</body>
+
+
+</html>
