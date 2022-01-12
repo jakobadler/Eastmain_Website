@@ -3,20 +3,22 @@
 <head>
     <link rel="icon" type="image/png" href="favicon.png"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>Park Adler's Eastmain</title>
+    <title>Eastmain</title>
+    
     <style>
+        body {background-color: black;}
         body { margin: 0; }
+        body { min-height: 100vh; }
     </style>
 
 
-<!-- Three.js library -->
+<!-- Three.js librar -->
 <!-- <script src="https://threejs.org/build/three.min.js"></script> -->
 <script src="Static/three.js"></script> 
 <!-- GLTFLoader.js source -->
 <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script> -->
 <script src="//cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
 <script src='threex.domevents.js'></script>
-<script type="module" src=".tween.module.min.js"></script>
 <script src="Static/OBJLoader.js"></script>
 <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
 <link type="text/css" rel="stylesheet" href="main.css">
@@ -106,7 +108,7 @@
 
         const loader2 = new THREE.GLTFLoader()
         loader2.load(
-            './model/Jakob Album Art for Website.glb',
+            'https://eastmainwebsite.s3.amazonaws.com/Album_Art.glb',
             function (gltf) {
                 // gltf.scene.traverse(function (child) {
                 //     if ((child as THREE.Mesh).isMesh) {
@@ -149,12 +151,12 @@
         } );
 
         const message = "Eastmain";
-        const message1 = "After a class on Environmental Ethics, the \ndestruction of the natural world as a result of \nour negligence in addition to the apathy we hold to suffering\n we inflict on other walks of life put me in a \nstate of dread and confusion. I did not \nknow how to cope with the existential thoughts that \nrevolved around the suffering we (myself included) \ninflict on the natural world. Emil Ciorans \n//On the Heights of Despair// provided solace \nand I began think about this month long wilderness \ntrip I had the opportunity of going on in the summer \nof 2019. I never felt such an inherent connection \nwith Mother Earth. Growing up in a city, I never \nfelt that I was at the mercy of the natural world, \nbut it was on this trip especially where I \nfelt as though I was at her mercy. I began to think \nabout all the ways we have altered life to make it \nmore comfortable and more secure, yet in doing so inherently \nlosing touch with the natural world. Yet it was on \nthis trip, in which we put in on the Eastmain River, \nwhere I felt an inherent oneness with nature. I Sometimes \nI think that the figure is seeping into the water \nand other times I think that it is emerging from it, \nyet the idea of the the oneness of man and nature \nstay constant.";
-        const message2 =  "The sheer beauty of the sky painted with \nclouds of animosity: a forever inspiration.";
+        const message1 = "After a class I took that focused on environmental \nethics, the destruction of the natural world \nas a result of our negligence and indifference towards \nthe suffering we inflict on other walks of life\n left me in a state of dread and confusion. I \nsimply did not know how to cope with the \nexistential thoughts that arose. Emil Ciorans \n//On the Heights of Despair// provided solace, and I \nbegan to think about the month-long wilderness \ntrip I had the opportunity of going on in the \nsummer of 2019. Growing up in a huge city, I never felt \nthat I was at the mercy of the natural world, but it was on \nthis trip where I felt that my existence \nwas in conversation with Mother Nature. I began to \nthink about all the ways we have altered life \nto make it more comfortable and more secure for humans, \nyet in doing so inherently losing touch with the \nnatural world. It was on this trip, in which we \nput in on the Eastmain River, where I felt an inherent \noneness with nature. Sometimes I think that the figure is \nseeping into the water and other times I \nthink that it is emerging from it, yet the idea \nof the the oneness of man and nature stay constant.";
+        const message2 =  "The sheer beauty of the sky painted with clouds \n of animosity: a continual inspiration.";
         const message3 = "In times of change, the sun still sets and the \nmoon still rises. In writing, but especially \nafter I had finished the EP, I began to ponder the idea \nof impermanence and how it lies at the center of \nthese songs: relationships change, individuals \nchange, and nature changes, but on more of a \nmicro scale, every single thing that may seem \npermanent, isnt. I feel like there is comfort in \npermanence as permanence provides security. \nSo, the inherent comfort we find in the permanence \n makes dealing with change so much more difficult. \nThus, in that I found comfort in the permanence of\nrelationships and people, when these changed, I was \ninherently thrown off. The idea of the acceptance of \nthe impermanence of things is an idea that \nI am always grappling with, but I found solace and \ncomfort not just in the beauty of the sun and moon. \nThe sun and moon, though are ever changing in their \ncomposition, matter, so on and so forth, still rise and \nset until the day comes when they wont anymore. ";
         const message4 = "An ode to the spruce trees in Quebec and the \npine trees in Maine.";
-        const message5 = " Due east are clouds that represent the unknown, \n the thought being that on a timeline, in that \n present and future events lie towards the right, \n the future is unknown. I, as I feel like so many \n others, tend to ruminate in the past and \n ponder the future, distracting us from the present. \n How much do we miss when we are removed from \n the present?";
-        const alert = "Drag to rotate around // Scroll to zoom in";
+        const message5 = "I am often overcome by the natural human tendency \nto ruminate in the past and to worry about the \nfuture, both of which sometimes make me feel like I \nam in a subconscious state of being. I feel that \nexternalizing, whether through conversation or writing, \nprovides a way of experiencing and \nprocessing emotions in the present, where they \nbecome much more tangible. Just east of the cliffs \nare clouds which represent the unknown in \ntheir opacity, a reflection of the innate difficulty \nin living in the present even though the future \nremains unknown and the past is already set in stone.";
+        const alert = "Drag to rotate // Scroll to zoom in";
         const mobile = "Please use on Web for best experience";
 
 
@@ -261,85 +263,11 @@
     text5.position.y = 0;
 
     //make click instead of hover
-
-    domEvents.addEventListener (sphere2, 'mouseover', event => {
-        //imagemesh2.visible = true;
-        text1.visible = true;
-        // TYPE EFFECT
-    });
-    //hover out
-    domEvents.addEventListener (sphere2, 'mouseout', event => {
-        //imagemesh2.visible = false;
-        text1.visible = false; 
-    });
-    domEvents.addEventListener (sphere3, 'mouseover', event => {
-        //imagemesh3.visible = true;  
-        text2.visible = true;
-    });
-    //hover out
-    domEvents.addEventListener (sphere3, 'mouseout', event => {
-        //imagemesh3.visible = false;
-        text2.visible = false;
-    });
-    domEvents.addEventListener (sphere4, 'mouseover', event => {
-        //imagemesh4.visible = true; 
-        text3.visible = true;
-    });
-    //hover out
-    domEvents.addEventListener (sphere4, 'mouseout', event => {
-        //imagemesh4.visible = false;
-        text3.visible = false;  
-    });
-    domEvents.addEventListener (sphere5, 'mouseover', event => {
-        //imagemesh5.visible = true;
-        text4.visible = true;
-    });
-    //hover out
-    domEvents.addEventListener (sphere5, 'mouseout', event => {
-        //imagemesh5.visible = false;
-        text4.visible = false;   
-    });
-    domEvents.addEventListener (sphere1, 'mouseover', event => {
-        //imagemesh1.visible = true;
-        text5.visible = true;
-    });
-    //hover out
-    domEvents.addEventListener (sphere1, 'mouseout', event => {
-        //imagemesh1.visible = false;
-        text5.visible = false; 
-    });
-    domEvents.addEventListener (sphere1, 'mouseover', event => {
-        //imagemesh1.visible = false;   
-        text6.visible = false;
-        text7.visible = false;
-    },10000);
-    domEvents.addEventListener (sphere2, 'mouseover', event => {
-        //imagemesh1.visible = false;   
-        text6.visible = false;
-        text7.visible = false;
-    },10000);
-    domEvents.addEventListener (sphere3, 'mouseover', event => {
-        //imagemesh1.visible = false;   
-        text6.visible = false;
-        text7.visible = false;
-    },10000);
-    domEvents.addEventListener (sphere4, 'mouseover', event => {
-        //imagemesh1.visible = false;   
-        text6.visible = false;
-        text7.visible = false;
-    },10000);
-    domEvents.addEventListener (sphere5, 'mouseover', event => {
-        //imagemesh1.visible = false;   
-        text6.visible = false;
-        text7.visible = false;
-    },10000);
-    domEvents.addEventListener (text, 'mouseover', event => {
-        imagemesh1.visible = true;   
-    },10000);
-    domEvents.addEventListener (text, 'mouseout', event => {
-        imagemesh1.visible = false ;   
-    },10000);
-
+    sphere1.visible = false;
+    sphere2.visible = false;
+    sphere3.visible = false;
+    sphere4.visible = false;
+    sphere5.visible = false;
        
         } else {
         text7.visible = false;
@@ -544,7 +472,6 @@
 
 }
 
-    //import TWEEN from 'https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.5.0/dist/tween.esm.js';
     //when you click on sphere 1, it changes position, you want an image to come up, doesnt work
 
     } );
@@ -683,7 +610,7 @@
     @media only screen and (max-width: 1000px) {
     .Spotify {
         text-align: center;
-        left: 52%;
+        left: 50%;
         height: 8%;
 
     }
